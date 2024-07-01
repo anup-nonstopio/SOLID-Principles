@@ -1,10 +1,14 @@
-class User {
-    getAccessLevel() {
-        console.log('User access level');
-    }
+// Liskov Substitution Principle (LSP)
 
+class BaseUser {
     getRole() {
         console.log('User role');
+    }
+}
+
+class User extends BaseUser {
+    getAccessLevel() {
+        console.log('User access level');
     }
 }
 
@@ -28,7 +32,7 @@ class Manager extends User {
     }
 }
 
-class Customer extends User {
+class Customer extends BaseUser {
     getAccessLevel() {
         throw new Error('Customer does not have access level'); // violates LSP
     }
@@ -42,5 +46,5 @@ function checkAccessLevel(user: User) {
     user.getAccessLevel();
 }
 
-checkAccessLevel(new Customer()); // Error: Customer does not have access level
+//checkAccessLevel(new Customer()); // Error: Customer does not have access level
 checkAccessLevel(new Admin()); // Admin access level
