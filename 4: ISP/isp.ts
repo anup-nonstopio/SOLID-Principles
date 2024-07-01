@@ -1,11 +1,44 @@
-interface DocumentManager {
-    openDocument(): void;   
-    closeDocument(): void;
-    saveDocument(): void;
-    scanDocument(): void;
+// Interface Segregation Principle
+
+// interface DocumentManager {
+//     openDocument(): void;   
+//     closeDocument(): void;
+//     saveDocument(): void;
+//     scanDocument(): void;
+// }
+
+interface DocumentOpener {
+    openDocument(): void;
 }
 
-class BasicEditor implements DocumentManager {
+interface DocumentCloser {
+    closeDocument(): void;
+}
+
+interface DocumentSaver {
+    saveDocument(): void;
+}
+
+interface DocumentScanner {
+    scanDocument(): void;
+}
+//or segregate the common interfaces into a single interface
+
+class BasicEditor implements DocumentOpener, DocumentCloser, DocumentSaver {
+    openDocument() {
+        console.log('Document opened');
+    }
+
+    closeDocument() {
+        console.log('Document closed');
+    }
+
+    saveDocument() {
+        console.log('Document saved');
+    }
+}
+
+class AdvancedEditor implements DocumentOpener, DocumentCloser, DocumentSaver, DocumentScanner {
     openDocument() {
         console.log('Document opened');
     }
@@ -18,8 +51,7 @@ class BasicEditor implements DocumentManager {
         console.log('Document saved');
     }
 
-    // violates ISP
     scanDocument() {
-        throw new Error('Scan not supported');
+        console.log('Document scanned');
     }
 }
